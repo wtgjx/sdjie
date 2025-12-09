@@ -1,5 +1,2 @@
-# No external dependencies needed for this simple server
-# The code uses standard library modules (http.server, socketserver, json, urllib, os, sys, uuid, time, base64)
-# The 'utils' module is local and included in the project.
-# We will add a dummy dependency to ensure Vercel uses Python runtime.
+flask
 requests
