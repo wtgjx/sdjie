@@ -11,7 +11,7 @@ from flask import Flask, request, jsonify, send_from_directory
 import sys
 
 # Add parent directory to path to import utils
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))\n\n# Vercel Serverless Functions have a read-only filesystem, so we must change the AVATARS_DIR and AVATARS_JSON to /tmp
 
 try:
     import utils
@@ -22,18 +22,21 @@ app = Flask(__name__)
 
 API_URL = "https://ark.cn-beijing.volces.com/api/v3/images/generations"
 API_KEY = os.environ.get("AI_API_KEY", "3f02c067-2369-4b2f-8cfd-3ec621b43d2b")
-AVATARS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "generated_avatars")
-AVATARS_JSON = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "avatars.json")
-REF_HAT_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ref_hat.png")
+AVATARS_DIR = "/tmp/generated_avatars"
+AVATARS_JSON = "/tmp/avatars.json"
+REF_HAT_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public", "ref_hat.png")
 
 # Ensure avatars dir exists
 if not os.path.exists(AVATARS_DIR):
-    os.makedirs(AVATARS_DIR)
+    os.makedirs(AVATARS_DIR, exist_ok=True)
 
 # Initialize avatars.json if not exists
 if not os.path.exists(AVATARS_JSON):
-    with open(AVATARS_JSON, 'w') as f:
-        json.dump([], f)
+    try:
+        with open(AVATARS_JSON, 'w') as f:
+            json.dump([], f)
+    except Exception as e:
+        print(f"Could not initialize avatars.json in /tmp: {e}")
 
 @app.route('/api/avatars', methods=['GET'])
 def get_avatars():
@@ -222,14 +225,8 @@ def generate_avatar():
         return jsonify(error_response), 500
 
 # Serve static files from parent directory
-@app.route('/')
-def index():
-    return send_from_directory(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'index.html')
-
-@app.route('/<path:filename>')
-def serve_static(filename):
-    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return send_from_directory(root_dir, filename)
+# Static files are now served by Vercel's static file server.
+# We only need to handle the API routes.
 
 # For Vercel, export the Flask app as 'app'
 # Vercel will automatically detect and use this
