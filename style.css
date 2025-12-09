@@ -1,0 +1,499 @@
+:root {
+    /* Base Variables */
+    --christmas-red: #D42020;
+    --christmas-green: #1B5E20;
+    --snow-white: #FFFFFF;
+    --text-color: #333333;
+    --bg-color: #F8F8F8;
+    --accent-color: #D42020;
+    --card-bg: #FFFFFF;
+    --btn-radius: 25px;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+    background-color: var(--bg-color);
+    transition: background-color 0.5s;
+}
+
+/* --- Theme Specifics --- */
+
+/* Simple Theme (Default Look) */
+body[data-theme="simple"] {
+    --bg-color: #F8F8F8;
+    --accent-color: #D42020;
+    --card-bg: #FFFFFF;
+    background-image: none;
+}
+body[data-theme="simple"] .container {
+    background-image: linear-gradient(180deg, #D42020 0%, #D42020 30%, #F8F8F8 30%, #F8F8F8 100%);
+}
+
+/* Christmas Theme */
+body[data-theme="christmas"] {
+    --bg-color: #0F172A; /* Night Sky */
+    --accent-color: #C0392B;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --btn-radius: 8px; /* Boxy for gifts */
+}
+body[data-theme="christmas"] .container {
+    background-image: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+}
+body[data-theme="christmas"] .title {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+body[data-theme="christmas"] .subtitle {
+    color: #E2E8F0;
+}
+body[data-theme="christmas"] .btn-primary {
+    background: linear-gradient(135deg, #D42020, #B71C1C);
+    border: 2px solid #FFD700;
+    box-shadow: 0 4px 0 #8B0000; /* 3D effect */
+    position: relative;
+    overflow: visible;
+}
+body[data-theme="christmas"] .btn-primary::after {
+    /* Gift Bow Effect */
+    content: '🎀';
+    position: absolute;
+    top: -10px;
+    right: -5px;
+    font-size: 20px;
+    transform: rotate(15deg);
+}
+body[data-theme="christmas"] .btn-primary:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+
+/* --- Layout --- */
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.theme-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+}
+
+.theme-select {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+}
+body[data-theme="christmas"] .theme-select {
+    color: white;
+    background: rgba(0,0,0,0.3);
+}
+
+.sound-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+body[data-theme="christmas"] .sound-btn {
+    color: white;
+    background: rgba(0,0,0,0.3);
+}
+
+.header {
+    height: 25vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    z-index: 2;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.main-content {
+    width: 90%;
+    max-width: 400px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -20px;
+    min-height: 300px;
+    box-sizing: border-box;
+    z-index: 2;
+    transition: background 0.3s;
+}
+
+.image-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.image-wrapper {
+    width: 260px;
+    height: 260px;
+    background-color: #F5F5F5;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    border: 3px dashed #E0E0E0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.image-wrapper:hover {
+    background-color: #F0F0F0;
+    border-color: #CCC;
+}
+
+.image-wrapper.has-result {
+    border: 3px solid var(--christmas-green);
+}
+
+.avatar-display {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.upload-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #999;
+}
+
+.upload-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.action-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn {
+    width: 100%;
+    border-radius: var(--btn-radius);
+    font-size: 16px;
+    padding: 14px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: var(--christmas-green);
+    color: white;
+    box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2);
+}
+
+.btn-primary:active {
+    background-color: #144a18;
+}
+
+.btn-primary:disabled {
+    background-color: #ccc !important; /* Override theme styles */
+    box-shadow: none !important;
+    border: none !important;
+    cursor: not-allowed;
+    transform: none !important;
+}
+.btn-primary:disabled::after {
+    display: none;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--christmas-green);
+    color: var(--christmas-green);
+}
+
+.btn-outline:hover {
+    background-color: #F0FFF0;
+}
+
+/* Status & Footer */
+.status-area {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #EEE;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: var(--christmas-green);
+    width: 0%;
+    transition: width 0.3s;
+}
+body[data-theme="christmas"] .progress-bar-fill {
+    background: repeating-linear-gradient(
+        45deg,
+        #D42020,
+        #D42020 10px,
+        #FFF 10px,
+        #FFF 20px
+    );
+}
+
+.status-text {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    display: block;
+    margin-top: 8px;
+}
+
+.footer {
+    margin-top: auto;
+    padding: 20px;
+    z-index: 2;
+}
+
+.footer-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+}
+body[data-theme="simple"] .footer-text {
+    color: #CCC;
+}
+
+/* Hat Selector */
+.hat-selector {
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.selector-title {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.hat-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.hat-option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    background: #FAFAFA;
+    border: 2px solid #F0F0F0;
+    border-radius: 12px;
+    padding: 10px 4px;
+    transition: all 0.2s;
+}
+
+.hat-option:hover {
+    border-color: #E0E0E0;
+    background-color: #F5F5F5;
+}
+
+.hat-option input { display: none; }
+
+.hat-option input:checked + .hat-icon {
+    transform: scale(1.1);
+}
+
+.hat-option:has(input:checked) {
+    border-color: var(--accent-color);
+    background-color: rgba(212, 32, 32, 0.05);
+}
+
+.hat-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+    transition: transform 0.2s;
+}
+
+.hat-name {
+    font-size: 12px;
+    color: #555;
+    font-weight: 600;
+}
+
+/* --- Decorations (Snow) --- */
+.snowflake {
+    position: fixed;
+    color: #FFF;
+    font-size: 1em;
+    font-family: Arial;
+    text-shadow: 0 0 5px #000;
+    z-index: 0;
+    top: -10%;
+    animation: fall linear infinite, sway ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(110vh); }
+}
+
+@keyframes sway {
+    0%, 100% { margin-left: 0; }
+    50% { margin-left: 50px; }
+}
+
+/* --- Flying Santa --- */
+.santa-sleigh {
+    position: fixed;
+    top: 20%;
+    right: -1000px; /* Start further back to accommodate trail */
+    font-size: 80px;
+    z-index: 5;
+    pointer-events: none;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.santa-head {
+    z-index: 10;
+    margin-right: 10px;
+}
+
+.avatar-trail {
+    display: flex;
+    align-items: center;
+    gap: -15px; /* Overlap slightly */
+}
+
+.trail-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #FFF;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    object-fit: cover;
+    transform-origin: top center;
+    animation: swing 1s ease-in-out infinite alternate;
+}
+
+@keyframes swing {
+    from { transform: rotate(-15deg); }
+    to { transform: rotate(15deg); }
+}
+
+.santa-fly {
+    animation: flyAcross 7s linear forwards; /* Faster speed */
+}
+
+@keyframes flyAcross {
+    0% { 
+        right: -1000px; 
+        opacity: 1; 
+        transform: translateY(0) rotate(0deg) scale(0.8); 
+    }
+    20% { 
+        transform: translateY(var(--fly-y-1, -100px)) rotate(-10deg) scale(0.9); 
+    }
+    40% { 
+        transform: translateY(var(--fly-y-2, 80px)) rotate(5deg) scale(1); 
+    }
+    60% { 
+        transform: translateY(var(--fly-y-3, -50px)) rotate(-5deg) scale(1.1); 
+    }
+    80% { 
+        transform: translateY(var(--fly-y-4, 20px)) rotate(5deg) scale(1); 
+    }
+    100% { 
+        right: 120vw; 
+        opacity: 1; 
+        transform: translateY(-200px) rotate(-15deg) scale(0.8); 
+    }
+}
+
+/* --- 3D Tilt Effect --- */
+.main-content {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+/* --- Dropping Particles (Gifts/Snow) --- */
+.falling-particle {
+    position: fixed;
+    z-index: 4; /* Behind Santa (5) but above bg */
+    pointer-events: none;
+    animation: particleDrop 1.5s ease-out forwards;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+@keyframes particleDrop {
+    0% { 
+        transform: translateY(0) scale(1) rotate(0deg); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateY(150px) scale(0.5) rotate(180deg); 
+        opacity: 0; 
+    }
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣像帽 - 圣诞节头像生成器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="decorationsContainer"></div>
+    <div id="santaContainer" class="santa-sleigh">🎅🦌🛷💨</div>
+    
+    <!-- Theme Switcher -->
+    <div class="theme-controls">
+        <select id="themeSelector" class="theme-select">
+            <option value="christmas">🎄 圣诞狂欢</option>
+            <option value="simple">⚪ 简约风格</option>
+        </select>
+        <button id="musicToggle" class="sound-btn">🎵</button>
+        <button id="soundToggle" class="sound-btn">🔊</button>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgmAudio" loop src="bgm.mp3"></audio>
+
+    <div class="container christmas-theme" id="mainContainer">
+        <div class="header">
+            <h1 class="title">🎄 圣像帽 🎅</h1>
+            <p class="subtitle">一键生成你的专属圣诞头像</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Image Display Area -->
+            <div class="image-area">
+                <div class="image-wrapper" id="imageWrapper">
+                    <canvas id="editorCanvas" style="display: none; max-width: 100%; max-height: 100%;"></canvas>
+                    <img id="avatarDisplay" src="" alt="Avatar" class="avatar-display" style="display: none;">
+                    
+                    <div id="uploadZone" class="upload-zone">
+                        <div class="upload-icon">📷</div>
+                        <span>点击上传头像</span>
+                        <span class="upload-hint">支持 JPG, PNG</span>
+                        <input type="file" id="fileInput" accept="image/png, image/jpeg" style="display: none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="action-area">
+                <!-- Initial State or Image Selected -->
+                <div id="initialControls">
+                    <div class="hat-selector">
+                        <p class="selector-title">选择你的圣诞风格</p>
+                        <div class="hat-options">
+                            <label class="hat-option">
+                                <input type="radio" name="hatStyle" value="red" checked>
+                                <span class="hat-icon">🎅</span>
+                                <span class="hat-name">经典红</span>
+                            </label>
+                            <label class="hat-option">
+                                <input type="radio" name="hatStyle" value="green">
+                                <span class="hat-icon">🧝</span>
+                                <span class="hat-name">精灵绿</span>
+                            </label>
+                            <label class="hat-option">
+                                <input type="radio" name="hatStyle" value="antlers">
+                                <span class="hat-icon">🦌</span>
+                                <span class="hat-name">麋鹿角</span>
+                            </label>
+                            <label class="hat-option">
+                                <input type="radio" name="hatStyle" value="xuexitong">
+                                <span class="hat-icon">🎓</span>
+                                <span class="hat-name">学习通</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="adjustControls" style="display: none; margin-bottom: 10px;">
+                        <p style="font-size: 12px; color: #666; text-align: center;">AI 将自动识别并佩戴圣诞帽</p>
+                    </div>
+                    <button id="btnGenerate" class="btn btn-primary" disabled>生成圣诞帽 (AI)</button>
+                    <button id="btnChange" class="btn btn-outline" style="display: none;">更换图片</button>
+                </div>
+
+                <!-- Result Generated -->
+                <div id="resultControls" style="display: none;">
+                    <button id="btnSave" class="btn btn-primary">下载到本地</button>
+                    <button id="btnReset" class="btn btn-outline">再来一张</button>
+                </div>
+            </div>
+
+            <!-- Processing Status -->
+            <div id="statusArea" class="status-area" style="display: none;">
+                <div class="progress-bar">
+                    <div id="progressBarFill" class="progress-bar-fill"></div>
+                </div>
+                <span class="status-text">Doubao-Seedream 正在绘制中...</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">Powered by Doubao-Seedream-4.5</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
